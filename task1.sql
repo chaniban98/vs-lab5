@@ -1,28 +1,13 @@
-
-INSERT INTO institutes (name) VALUES ('Институт математики и информатики');
-
-INSERT INTO groups (name, short_name, year, institute_id) VALUES
-('Информатика и вычислительная техника', 'Б-ИВТ-25-1', 2025, 1),
-('Информатика и вычислительная техника', 'Б-ИВТ-25-2', 2025, 1),
-('Фундаментальная информатика и информационные технологии', 'Б-ФИИТ-25', 2025, 1),
-('Прикладная информатика', 'Б-ПИ-25-1', 2025, 1);
-INSERT INTO students (surname, name, father_name, group_id) VALUES
-('Кондаков', 'Алексей', 'Айсенович', 1),
-('Амвросьев', 'Данил', NULL, 1),
-('Андреев', 'Егор', NULL, 1),
-('Баишев', 'Алгыс', NULL, 1),
-('Борисов', 'Любомир', NULL, 1),
-('Бурнашов', 'Даниил', NULL, 1),
-('Ермолаев', 'Айсен', NULL, 1),
-('Иванов', 'Никита', NULL, 1),
-('Иванов', 'Эрхан', NULL, 1),
-('Новиков', 'Ёркён', NULL, 1),
-('Орбу', 'Артём', NULL, 1),
-('Павлов', 'Айтал', NULL, 1),
-('Петров', 'Кирилл', NULL, 1),
-('Петров', 'Эльдар', NULL, 1),
-('Седалищев', 'Александр', NULL, 1),
-('Семёнов', 'Максим', NULL, 1),
-('Соловьёв', 'Роман', NULL, 1),
-('Софронов', 'Антон', NULL, 1),
-('Степанов', 'Артур', NULL, 1);
+CREATE TABLE cathedrals (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(512) NOT NULL,
+    chief VARCHAR(256) NOT NULL
+);
+ALTER TABLE groups ADD COLUMN cathedral_id INT REFERENCES cathedrals(id);
+INSERT INTO cathedrals (name, chief) VALUES
+('Кафедра информационных технологий', 'Васильева Наталья Васильевна'),
+('Математическая экономика и прикладная информатика', 'Матвеева Нюргуяна Николаевна');
+SELECT * FROM cathedrals;
+UPDATE groups SET cathedral_id = 1 WHERE short_name IN ('Б-ИВТ-25-1', 'Б-ИВТ-25-2', 'Б-ФИИТ-25');
+UPDATE groups SET cathedral_id = 2 WHERE short_name = 'Б-ПИ-25-1';
+SELECT * FROM groups WHERE cathedral_id = 1;
